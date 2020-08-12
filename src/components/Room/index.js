@@ -21,7 +21,7 @@ const Room = ({
     const handleMic = () => {
         const publications = room.localParticipant.audioTracks;
 
-        console.log('publications', publications)
+        // console.log('publications', publications)
 
         publications.forEach(publication => {
             if (!micEnabled) publication.track.enable();
