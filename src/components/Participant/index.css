@@ -1,0 +1,15 @@
+.participant {
+    /* background: #333e5a; */
+    border-radius: 6px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+.participant video {
+    width: 100%;
+}
+.participant h3 {
+    text-align: center;
+    padding-bottom: 0.5em;
+    color: #fff;
+}

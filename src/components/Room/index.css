@@ -1,0 +1,71 @@
+.video-container {
+    width: 100%;
+}
+
+.video-body {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 400px;
+}
+
+.video-control {
+padding-top: 20px;
+padding-bottom: 20px;
+width: 100%;
+background: #333e5a;
+display: flex;
+flex-direction: row;
+justify-content: center;
+position: relative;
+bottom: 0;
+}
+
+.video-control-icon {
+display: flex;
+margin: 0px 2vw;
+color: white;
+background: lightgreen;
+border-radius: 100%;
+}
+
+.video-control-icon:hover {
+    background: white;
+    color: lightgreen;
+}
+
+.video-control-icon.block {
+    background: red;
+}
+
+.video-control-icon svg {
+width: 100%;
+}
+
+.video-icon {
+text-align: center;
+border-radius: 100%;
+width: 2.5vw;
+height: 2.5vw;
+padding: 5px;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 0.5vw;
+}
+
+.local-participant {
+width: 50%;
+padding-right: 5px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.remote-participants {
+width: 50%;
+padding-left: 5px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
