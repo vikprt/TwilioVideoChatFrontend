@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./index.css";
 
 const Participant = ({
+    isMuted,
     participant
 }) => {
     const [videoTracks, setVideoTracks] = useState([]);
@@ -42,7 +43,7 @@ const Participant = ({
             setAudioTracks([]);
             participant.removeAllListeners();
         }
-    }, [participant]);
+    }, [participant, isMuted]);
 
     useEffect(() => {
         const videoTrack = videoTracks[0];
@@ -67,7 +68,7 @@ const Participant = ({
     return (
         <div className="participant">
             <video ref={videoRef} autoPlay={true} />
-            <audio ref={audioRef} autoPlay={true} muted={false} />
+            <audio ref={audioRef} autoPlay={true} muted={isMuted} />
         </div>
     )
 };

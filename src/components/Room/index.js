@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Video from "twilio-video";
 import Participant from "../Participant/index";
+import { first } from "lodash";
 
 import { faMicrophone, faVideo, faDesktop, faPhoneSlash } from '@fortawesome/free-solid-svg-icons'
 import Icon from "./Icon";
@@ -13,6 +14,7 @@ const Room = ({
     handleLogout
 }) => {
     const [room, setRoom] = useState(null);
+    const [screenTrack, setScreenTrack] = useState(null);
     const [participants, setParticipants] = useState([]);
 
     const [micEnabled, setMicEnabled] = useState(true);
@@ -20,8 +22,6 @@ const Room = ({
 
     const handleMic = () => {
         const publications = room.localParticipant.audioTracks;
-
-        // console.log('publications', publications)
 
         publications.forEach(publication => {
             if (!micEnabled) publication.track.enable();
@@ -55,10 +55,13 @@ const Room = ({
         return navigator.mediaDevices.getDisplayMedia({
             video: {
             height: height,
-            width: width
+            width: width,
+            mediaSource: 'screen'
             }
         }).then(function(stream) {
-            return new Video.LocalVideoTrack(stream.getVideoTracks()[0]);
+            const newStream =  new Video.LocalVideoTrack(first(stream.getVideoTracks()));
+            room.localParticipant.publishTrack(newStream);
+            setParticipants(prevParticipants => [...prevParticipants, room.localParticipant]);
         });
     }
 
@@ -72,7 +75,8 @@ const Room = ({
 
         Video.connect(token, {
             name: roomName,
-            video: { width: 300, height: 400 }
+            audio: true,
+            video: { width: 600, height: 400 }
         }).then(room => {
             setRoom(room);
             room.on("participantConnected", participantConnected);
@@ -96,7 +100,7 @@ const Room = ({
     }, [roomName, token]);
 
     let remoteParticipants = participants.map(participant => (
-        <Participant key={participant.sid} participant={participant} />
+        <Participant key={participant.sid} isMuted={!micEnabled} participant={participant} />
     ));
 
     remoteParticipants = remoteParticipants[remoteParticipants.length - 1];
@@ -108,6 +112,7 @@ const Room = ({
                     {room ? (
                         <Participant
                             key={room.localParticipant.sid}
+                            isMuted={!micEnabled}
                             participant={room.localParticipant}
                         />
                     ) : (
@@ -126,7 +131,7 @@ const Room = ({
                 <div className="video-control-icon">
                     <Icon icon={faDesktop} onClick={handleScreen} />
                 </div>
-                <div className="video-control-icon">
+                <div className="video-control-icon block">
                     <Icon icon={faPhoneSlash} onClick={handleLogout} />
                 </div>
             </div>

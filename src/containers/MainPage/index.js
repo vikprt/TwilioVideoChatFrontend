@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import CheckedIn from '../../components/CheckedIn';
 import MemberList from '../../components/MemberList';
+import OffMemberList from '../../components/MemberList/offLineMembers';
 // import VideoComponent from '../../components/VideoComponent';
 import { faLink, faAngleDoubleRight, faAngry } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -53,6 +54,7 @@ const MainPage = () => {
 
     socket.on("askVideoChat", (data) => {
       const sender = data.sender;
+      // const sender = user.user.first_name + user.user.last_name;
       const receiver = data.receiver;
 
       if (receiver == user.user.id) {
@@ -148,6 +150,18 @@ const MainPage = () => {
 
   return (
     <div className='main'>
+      <div className="offline-members">
+      {
+          users.map((data, index) =>
+            <OffMemberList
+              key={index}
+              data={data}
+              onlineUsers={onlineUsers}
+              handleVideoChat={handleVideoChat}
+            />
+          )
+        }
+      </div>
       {
         videoState ?
         <div className="modal">

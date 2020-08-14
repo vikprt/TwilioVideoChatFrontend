@@ -58,7 +58,7 @@
   height: calc(100% - 3vh - 15px);
   border-bottom: 5px solid white;
   background: #51658a;
-  max-height: 443px;
+  max-height: 500px;
   overflow-y: auto;
 }
 
